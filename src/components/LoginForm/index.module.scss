@@ -1,0 +1,44 @@
+@import '../../styles/global.scss';
+._{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    .container{
+        @extend %container;
+        .content{
+            width:550px;
+            // @media screen and (max-width:$break-point-md) {
+            //    width: 100%;
+            // }
+            .logo{
+                img{
+                    width: 160px;
+                }
+            }
+            h3{
+                font-size:22px;
+            }
+           .form_container{
+                form{
+                    > .form_input{
+                        margin-bottom:10px;
+                    }
+                    p{
+                        text-align: right;
+                        margin:0;
+                        a{  
+                            color:$light-blue;
+                            text-decoration: none;
+                        } 
+                    }
+                    .button{
+                        margin-top: 10px;
+                    }
+                }
+           }
+        }
+    }
+}

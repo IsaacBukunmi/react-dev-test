@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* === Variables === **/
+$font-primary:'Roboto', sans-serif;
+
+$break-point-xs: 420px;
+$break-point-s: 576px;
+$break-point-md: 782px;
+$break-point-l: 992px;
+$break-point-xl: 1024px;
+$break-point-xxl: 1200px;
+
+/* ===================
+== Color Variables ===
+**/
+
+$black: #000000;
+$fade-black: #3E3E3E;
+$white: #ffffff;
+$dark-blue: #1d3466;
+$gray: rgba(0, 0, 0, 0.4);
+$light-blue: #2682DD;
+$dark-gray: rgba(0, 0, 0, 0.7);
+$text-gray: #828282;
+$bg-gray: #E5E5E5;
+$orange:#f04a22;
+
+%container {
+    padding:0 50px;
+ 
+    @media(max-width:$break-point-s) {
+        padding:0 30px;
+    }
+}
