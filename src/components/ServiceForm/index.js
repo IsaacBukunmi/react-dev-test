@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import logo from '../../assets/images/tecme_logo_white.png';
 import { FormInput, FormSelectInput, FormTextArea } from '../../elements/FormInput';
 import { location } from '../../utils/select-options';
@@ -6,6 +7,9 @@ import styles from './index.module.scss';
 
 const ServiceForm = () =>{
     const [service, setService] = useState({ title: "", description: "", location: "", credibility: ""})
+    
+    const {isLoading, isAuthenticated, token } = useSelector(state => state.auth)
+
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -71,6 +75,7 @@ const ServiceForm = () =>{
                                     type="text" 
                                     label="Device Types" 
                                     name="credibility"
+                                    className={styles.device_input}
                                     value={service.credibility}
                                     handleChange={handleChange}
                                     placeholder="e.g iPhone" 

@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-export const PrimaryButton = ({children, className, isLoading, ...otherProps}) => {
+export const PrimaryButton = ({children, className, isLoading, handleClick, ...otherProps}) => {
     return(
-        <button className={`${styles.primary_button} ${className}`} {...otherProps}>
+        <button  onClick={handleClick} className={`${styles.primary_button} ${className}`} {...otherProps}>
             {isLoading ? 'loading...' : children}
         </button>
     )

@@ -1,23 +1,44 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Redirect } from 'react-router';
 import logo from '../../assets/images/tecme_logo.png';
 import { PrimaryButton } from '../../elements/CustomButton';
 import { FormInput } from '../../elements/FormInput';
+import { login } from '../../redux/actions/authActions';
 import styles from './index.module.scss'
 
 const LoginForm = () => {
 
+    const [user, setUser] = useState({email: "", password: ""})
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
+    const {isLoading, isAuthenticated } = useSelector(state => state.auth)
+
+    const handleChange = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setUser({
+            ...user,
+            [name]:value
+        })
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(email && password ){
-            // props.login(email, password)
-            // console.log(email, password)
+        if(user.email && user.password ){
+            dispatch(login(user.email, user.password))
         }else{
             console.log("Form is empty")
         }
+    }
+
+    console.log(isAuthenticated)
+    
+    if(isAuthenticated){
+        return(
+            <Redirect to="/add-service" />
+        )
     }
 
 
@@ -34,8 +55,9 @@ const LoginForm = () => {
                             <div className={styles.form_input}>
                                 <FormInput 
                                     type="email" 
-                                    value={email}
-                                    handleChange={(e) => setEmail(e.target.value)}
+                                    name="email"
+                                    value={user.email}
+                                    handleChange={handleChange}
                                     placeholder="Enter email" 
                                     required
                                 />
@@ -43,15 +65,19 @@ const LoginForm = () => {
                             <div className={styles.form_input}>
                                 <FormInput 
                                     type="password" 
-                                    value={password} 
-                                    handleChange={(e) => setPassword(e.target.value)} 
+                                    name="password"
+                                    value={user.password} 
+                                    handleChange={handleChange} 
                                     placeholder="Enter password"
                                     required
                                 />
                             </div>
                             <p><a href="/">Forgot Password?</a></p>
                             <div className={styles.button}>
-                                <PrimaryButton>Login</PrimaryButton>
+                                <PrimaryButton
+                                    handleClick={handleSubmit}
+                                    isLoading={isLoading}
+                                >Login</PrimaryButton>
                             </div>
                         </form>
                     </div>
