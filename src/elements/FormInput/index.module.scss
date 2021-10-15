@@ -2,16 +2,7 @@
 
 .form_group{
     position: relative;
-    label{
-        font-size:17px;
-        display: block;
-        padding-bottom: 10px;
-        font-weight: 600;
-        color: $dark-gray;
-        span{
-            color: $orange;
-        }
-    }
+    
     .input_label{
         .input{
             position: relative;
@@ -48,16 +39,6 @@
 }
 
 .form_select_input{
-    label{
-        font-size:17px;
-        display: block;
-        padding-bottom: 10px;
-        font-weight: 600;
-        color: $dark-gray;
-        span{
-            color: $orange;
-        }
-    }
     select{
         width:100%;
         background-color: $white;
@@ -85,15 +66,6 @@
 }
 
 ._{
-    label{
-        display: block;
-        padding-bottom: 10px;
-        font-weight: 600;
-        color: $dark-gray;
-        span{
-            color: $orange;
-        }
-    }
     .textarea{
         width:100%;
         outline: transparent;
@@ -124,6 +96,21 @@
             font-family: $font-primary;
             font-size: 15px;
             opacity: 0.8;
+        }
+    }
+}
+
+label{
+    font-size:17px;
+    display: block;
+    padding-bottom: 10px;
+    font-weight: 600;
+    color: $dark-gray;
+    span{
+        color: $orange;
+
+        .que_mark{
+            color:$text-gray;
         }
     }
 }

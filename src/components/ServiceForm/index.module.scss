@@ -14,7 +14,7 @@
         height: 320px;
         border-radius: 20px;
         .content{
-            padding:100px  50px 0 50px;
+            padding:100px  50px 100px 50px;
             .header{
                 .logo{
                     img{
@@ -66,6 +66,48 @@
                                 width: 100%
                             }
                         }
+                    }
+
+                    .deliverables{
+                        p{
+                            font-weight:700;
+                        }
+                        ol{
+                            padding-left: 15px;
+                            li{
+                                display: flex;
+                                justify-content: space-between;
+                                .deliverables_input{
+                                    margin-left:20px;
+                                    width:50vw;
+                                }
+                                .input_btn{
+                                    > *{
+                                        width: 45px;
+                                        height: 45px;
+                                        border-radius: 5px;
+                                        border:none;
+                                        color: $white;
+                                        font-weight: 500;
+                                    }
+                                   .sub_btn{
+                                       background-color: $orange;
+                                       margin-right: 20px;
+                                   }
+                                    .add_btn{
+                                        background-color: $dark-blue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .images_upload{
+                        p{
+                            font-weight: 700;
+                        }
+                    }
+                    .submit_btn{
+                        margin-top:50px;
                     }
                 }
             }

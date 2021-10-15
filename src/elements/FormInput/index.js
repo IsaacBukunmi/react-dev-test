@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { RiQuestionLine } from 'react-icons/ri'
 
 
 export const FormInput = ({ handleChange, label, className, compulsory, type, ...otherProps}) => {
@@ -8,7 +9,7 @@ export const FormInput = ({ handleChange, label, className, compulsory, type, ..
     return(
         <div className={styles.form_group}>
                 {
-                    label && <label> { compulsory && <span>*</span>} {label}</label>
+                    label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>} </label>
                 }
             <div className={styles.input_label}>
                 <input 
@@ -36,7 +37,7 @@ export const FormSelectInput = ({className, label, value, name, handleChange, op
         <div className={styles.form_select_input}>
              <div className={`${styles.input_label} ${className}`}>
                 {
-                    label && <label> { compulsory && <span>*</span>} {label}</label>
+                    label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>}</label>
                 }
                 <select name={name} value={value} onChange={handleChange}>
                     {/* <option value="">--Select Category--</option> */}
@@ -55,7 +56,7 @@ export const FormTextArea = ({className, label, rows, compulsory, handleChange, 
     return(
         <div className={styles._}>
                 {
-                    label && <label> { compulsory && <span>*</span>} {label}</label>
+                    label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>}</label>
                 }
             <textarea 
                 className={`${styles.textarea} ${className}`} 
