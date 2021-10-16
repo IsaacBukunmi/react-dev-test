@@ -8,11 +8,11 @@
             position: relative;
             border: 1px solid $text-gray;
             box-sizing: border-box;
-            border-radius: 5px;
+            border-radius: 3px;
             height: 45px;
             width:100%;
             padding-left: 10px;
-            color:$text-gray;
+            color:$black;
             font-size: 16px;
             outline: transparent !important;
             opacity: 0.8;
@@ -44,23 +44,22 @@
         background-color: $white;
         border: 1px solid $text-gray;
         height: 45px;
-        border-radius: 8px;
-        color: $text-gray;
+        border-radius: 3px;
+        color: $black;
         font-size: 16px;
         padding-left:10px;
         opacity: 0.8;
         outline: transparent !important;
         &:focus{
-            color: $text-gray;
+            color: $black;
             font-size: 16px;
             text-transform: capitalize;
             // outline-color: $orange;
         }
 
         option{
-            color: $text-gray;
+            color: $black;
             font-size: 16px;
-            text-transform: capitalize;
         }
     }
 }
@@ -69,12 +68,12 @@
     .textarea{
         width:100%;
         outline: transparent;
-        border-radius: 5px;
+        border-radius: 3px;
         padding-left:10px;
         border: 1px solid $text-gray;
         font-family: $font-primary;
         font-size: 15px;
-        color: $text-gray;
+        color: $black;
         opacity: 0.8;
         padding-top:5px;
         &::-webkit-input-placeholder {
@@ -96,6 +95,30 @@
             font-family: $font-primary;
             font-size: 15px;
             opacity: 0.8;
+        }
+    }
+}
+
+.form_picker_input_group{
+    .picker_input{
+        button.picker{
+            height:45px;
+            background-color: $white;
+            border: 1px solid $text-gray;
+            color: $dark-gray;
+            font-weight: 600;
+            // border-radius: 3px;
+            cursor: pointer;
+            text-align: left;
+            padding-left: 15px;
+            &:hover{
+                background-color: $dark-blue;
+                color: $white;
+            }
+        }
+        button.picker_selected{
+            background-color: $dark-blue;
+            color: $white;
         }
     }
 }

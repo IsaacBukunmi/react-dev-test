@@ -33,6 +33,7 @@ export const FormInput = ({ handleChange, label, className, compulsory, type, ..
 }
 
 export const FormSelectInput = ({className, label, value, name, handleChange, options, compulsory, ...otherProps}) => {
+    
     return(
         <div className={styles.form_select_input}>
              <div className={`${styles.input_label} ${className}`}>
@@ -40,13 +41,38 @@ export const FormSelectInput = ({className, label, value, name, handleChange, op
                     label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>}</label>
                 }
                 <select name={name} value={value} onChange={handleChange}>
-                    {/* <option value="">--Select Category--</option> */}
                     {
                         options.map((option) => (
                             <option key={option.id} value={option.value}>{option.name}</option>
                         ))
                     }
                 </select>
+            </div>
+        </div>
+    )
+}
+
+export const Picker = ({className, label, value, name, handleChange, options, compulsory, onSelectOption, selected, ...otherProps}) => {
+    
+    return(
+        <div className={styles.form_picker_input_group}>
+             <div className={`${styles.picker_input} ${className}`}>
+                {
+                    label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>}</label>
+                }
+                {
+                    options.map((option) => (
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault()
+                                onSelectOption(option.value)
+                            }}
+                            key={option.id}
+                            className={styles.picker + (selected === option.value ? ' ' + styles['picker_selected'] : '')}
+                        >
+                            {option.name}
+                        </button>
+                ))}
             </div>
         </div>
     )

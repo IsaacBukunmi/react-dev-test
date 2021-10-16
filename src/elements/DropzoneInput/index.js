@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDropzone } from "react-dropzone";
+import uploadIcon from '../../assets/images/upload_icon.PNG';
 import './index.scss'
 
 const getClassName = (className, isActive) => {
@@ -21,9 +22,11 @@ const DropzoneInput = ({onDrop, accept}) => {
                 {isDragActive ? (
                 <p className="dropzone-content">Release to drop the files here</p>
                 ) : (
-                <p className="dropzone-content">
-                    Drag 'n' drop some files here, or click to select files
-                </p>
+                <div className="dropzone-content">
+                    <img src={uploadIcon} alt="upload icon" />
+                    <h3>Click or drag file to this area to upload</h3>
+                    <p>Only image files allowed</p>
+                </div>
             )}
           </div>
         </div>

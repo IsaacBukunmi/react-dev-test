@@ -1,6 +1,5 @@
 import { 
-    LOADING_USER_LOGIN,  
-    LOADING_USER_START,  
+    LOADING_USER_LOGIN,   
     LOGOUT_SUCCESS, 
     USER_LOGIN_FAIL, 
     USER_LOGIN_SUCCESS, 
@@ -19,7 +18,6 @@ const initialState = {
 
 export default function(state=initialState, action){
     switch(action.type){
-        case LOADING_USER_START:
         case LOADING_USER_LOGIN:
             return{
                 ...state,

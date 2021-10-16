@@ -1,17 +1,19 @@
 import React from "react";
+import styles from './index.module.scss';
 
 // Rendering individual images
 const Image = ({ image }) => {
   return (
-    <div className="file-item">
-      <img alt={`img - ${image.id}`} src={image.src} className="file-img" />
+    <div className={styles.file_item}>
+      <img alt={`img - ${image.id}`} src={image.src} />
     </div>
   );
 };
 
 // ImageList Component
 const ServiceImages = ({ images }) => {
-  
+
+
   // render each image by calling Image component
   const renderImage = (image, index) => {
     return (
@@ -22,8 +24,9 @@ const ServiceImages = ({ images }) => {
     );
   };
 
+
   // Return the list of files
-  return <section className="file-list">{images.map(renderImage)}</section>;
+  return <section className={styles.file_list}>{images.map(renderImage)}</section>;
 };
 
 export default ServiceImages;

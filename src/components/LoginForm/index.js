@@ -6,6 +6,7 @@ import logo from '../../assets/images/tecme_logo.png';
 import { PrimaryButton } from '../../elements/CustomButton';
 import { FormInput } from '../../elements/FormInput';
 import { login } from '../../redux/actions/authActions';
+import ErrorMessage from '../ErrorMessage';
 import styles from './index.module.scss'
 
 const LoginForm = () => {
@@ -14,6 +15,14 @@ const LoginForm = () => {
 
     const dispatch = useDispatch()
     const {isLoading, isAuthenticated } = useSelector(state => state.auth)
+
+    const emailValidation = () => {
+        const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(user.email && regex.test(user.email) === false){
+            return <ErrorMessage message="Please enter a valid email" />
+        }
+    }
+    
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -32,8 +41,6 @@ const LoginForm = () => {
             console.log("Form is empty")
         }
     }
-
-    console.log(isAuthenticated)
     
     if(isAuthenticated){
         return(
@@ -41,7 +48,7 @@ const LoginForm = () => {
         )
     }
 
-
+ 
     return (
         <div className={styles._}>
             <div className={styles.container}>
@@ -61,6 +68,9 @@ const LoginForm = () => {
                                     placeholder="Enter email" 
                                     required
                                 />
+                                {
+                                    emailValidation()
+                                }
                             </div>
                             <div className={styles.form_input}>
                                 <FormInput 
@@ -72,7 +82,7 @@ const LoginForm = () => {
                                     required
                                 />
                             </div>
-                            <p><a href="/">Forgot Password?</a></p>
+                            <p className={styles.forget_pwd}><a href="/">Forgot Password?</a></p>
                             <div className={styles.button}>
                                 <PrimaryButton
                                     handleClick={handleSubmit}

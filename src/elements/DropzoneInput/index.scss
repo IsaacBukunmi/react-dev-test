@@ -1,17 +1,39 @@
+@import '../../styles/global.scss';
+
 .dropzone {
   padding: 30px;
   height: 30vh;
-  border: 5px dashed #7649bc;
+  border: 1px dashed $text-gray;
   outline: none;
   cursor: pointer;
+  background-color:$bg-gray;
 }
 .dropzone-active {
-  background-color: #f1e2ff;
-  border: 5px solid #2fd7b5;
+  background-color: $bg-gray;
+  border: 1px solid $orange;
 }
 .dropzone-content {
-  align-self: center;
-  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img{
+    width:70px;
+    margin-bottom:25px;
+  }
+  h3{
+    color: $dark-gray;
+    align-self: center;
+    font-size: 24px;
+    margin:0;
+  }  
+  p{
+    margin:0;
+    margin-top:15px;
+    color:$text-gray;
+    opacity: 0.8;
+    font-size: 18px;
+  }
 }
 
 .text-center {
