@@ -1,0 +1,21 @@
+@import '../../styles/global.scss';
+
+._{
+    .container{
+        @extend %container;
+        padding-top: 30px;
+        display: flex;
+        .logout_btn{
+            background-color: transparent;
+            border: 1px solid $orange;
+            width:fit-content;
+            color:$orange;
+            margin-left:auto;
+            padding:10px 40px;
+            &:hover{
+                background-color: $orange;
+                color: $white;
+            }
+        }
+    }
+}

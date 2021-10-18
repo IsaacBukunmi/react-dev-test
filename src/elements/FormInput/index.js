@@ -41,6 +41,7 @@ export const FormSelectInput = ({className, label, value, name, handleChange, op
                     label && <label> { compulsory && <span>*</span>} {label} { compulsory && <span><RiQuestionLine className={styles.que_mark} /></span>}</label>
                 }
                 <select name={name} value={value} onChange={handleChange}>
+                    <option value=""selected="true" disabled="disabled">Select {label}</option>
                     {
                         options.map((option) => (
                             <option key={option.id} value={option.value}>{option.name}</option>

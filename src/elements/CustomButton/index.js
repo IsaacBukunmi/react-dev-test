@@ -9,9 +9,9 @@ export const PrimaryButton = ({children, className, isLoading, handleClick, ...o
     )
 }
 
-export const Button = ({children, className, isLoading, ...otherProps}) => {
+export const Button = ({children, className, isLoading, handleClick, ...otherProps}) => {
     return(
-        <button className={`${styles.normal_button} ${className}`} {...otherProps}>
+        <button onClick={handleClick} className={`${styles.normal_button} ${className}`} {...otherProps}>
             {isLoading ? 'loading...' : children}
         </button>
     )

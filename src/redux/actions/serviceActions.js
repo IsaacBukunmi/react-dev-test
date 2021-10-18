@@ -6,6 +6,7 @@ import {
     ADD_SERVICE_SUCCESS,
 } from "./actionTypes";
 import { returnError, returnSuccess } from "./alertActions";
+import Swal from 'sweetalert2'
 
 export const addService = (formData) => (dispatch, getState) => {
     dispatch({
@@ -38,7 +39,13 @@ export const addService = (formData) => (dispatch, getState) => {
                 type:ADD_SERVICE_SUCCESS,
                 payload:res.data,
             });
-            dispatch(returnSuccess(res.data.message))
+            Swal.fire({
+                title: 'Success',
+                text: `${res.data.message}`,
+                icon: 'success',
+                confirmButtonText: 'Continue'
+              })
+            // dispatch(returnSuccess(res.data.message))
             console.log(res.data)
         })
         .catch((err) => {

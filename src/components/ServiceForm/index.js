@@ -5,7 +5,8 @@ import Button, { PrimaryButton } from '../../elements/CustomButton';
 import { FormInput, FormSelectInput, FormTextArea, Picker } from '../../elements/FormInput';
 import { location, usageTypes } from '../../utils/select-options';
 import styles from './index.module.scss';
-import {HiOutlineMinus, HiOutlinePlus} from 'react-icons/hi';
+import {HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 import {BiDollar} from 'react-icons/bi'
 import DropzoneInput from '../../elements/DropzoneInput';
 import ServiceImages from '../ServiceImages';
@@ -16,21 +17,32 @@ import ErrorMessage from '../ErrorMessage';
 
 
 const ServiceForm = () =>{
-    const [service, setService] = useState({ title: "", description: "", location: "", credibility: "", estimation_duration:"0", usageType: "", price: "", deliverables: ""})
-    const price = service.price * 100;
-
-    const [images, setImages] = useState([]);
-    const [imageFiles, setImageFiles] = useState()
-
-    const [deliverables, setDeliverables]=useState([{
-        value: ""
-    }])
-
 
     const {isLoading} = useSelector(state => state.service)
     const dispatch = useDispatch()
 
 
+    // Initializing service form input
+    const [service, setService] = useState({ title: "", description: "", location: "", credibility: "", estimation_duration:"0", usageType: "", price: "", deliverables: ""})
+
+    // multiplying price input by 100
+    const price = service.price * 100;
+
+    // Array of uploaded image initialization
+    const [images, setImages] = useState([]);
+
+    // image files to be submmitted to API
+    const [imageFiles, setImageFiles] = useState()
+
+    // deliverable input value array
+    const [deliverables, setDeliverables]=useState([])
+
+    // add deliverable input
+    const [addDeliverableInput, setAddDeliverableInput] = useState("")
+    console.log(addDeliverableInput)
+
+
+    // Upload Images and showcase
     const onDrop = useCallback(acceptedFiles => {
         console.log(acceptedFiles);
         setImageFiles(acceptedFiles)
@@ -51,8 +63,15 @@ const ServiceForm = () =>{
       });
       }, []);
 
-   
 
+    const handleRemoveImage = (id) => {
+    let newImages = images.filter((image) => image.id !== id)
+    setImages(newImages)
+        
+    }
+
+   
+    // Function to handle input change
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -63,13 +82,14 @@ const ServiceForm = () =>{
         })
     }
 
-    function handleUsageTypeChange(data) {
-        setService((oldData) => ({ ...oldData, ...data }));
+    // Function to handle usage type picker input
+    function handleUsageTypeChange(type) {
+        setService((oldType) => ({ ...oldType, ...type }));
     }
 
-    console.log(service.usageType)
-
+    // Function to handle deliverables input
     const handleChangeInput = (val, index) => {
+        console.log(val.target.value)
         const newDeliverables = deliverables.reduce((arr, elem, i) => {
             if(i === index){
                 arr.push({ value: val });
@@ -79,27 +99,70 @@ const ServiceForm = () =>{
             return arr;
         }, [])
 
-        setDeliverables(newDeliverables)
+        console.log(newDeliverables)
+
+        const newDeliverableValArr = newDeliverables.map((newDeliverableVal) => {
+            return newDeliverableVal?.value?.target?.value
+        })
+
+        setDeliverables(newDeliverableValArr)
     }
 
     console.log(deliverables)
 
-    const handleChangeDeliverable = (index) => {
+    // Get input value and put it in an array
+    // const deliverableValArray = deliverables.map((deliverableVal) => {
+    //     return deliverableVal?.value?.target?.value
+    // })
+
+    // console.log(deliverableValArray)
+
+    // Function to get concatenated deliverable input values
+    const getDeliverableString = () => {
+        let deliverable = ""
+        for(let i = 0; i < deliverables.length; i++){
+            deliverable += deliverables[i] + "\\n"
+        }
+        console.log(deliverable.slice(0, -2))
+        return deliverable.slice(0, -2)
+    }
+    
+    getDeliverableString()
+
+
+    //Function to remove deliverables
+    const handleRemoveDeliverable = (index) => {
         const newDeliverables = deliverables.filter((_, i) => i !== index)
         setDeliverables(newDeliverables)
+        
     }
 
-    const handleAddDeliverable = () => {
+    // Function to add deliverables
+    const handleAddDeliverable = (e) => {
+        e.preventDefault()
+        console.log(addDeliverableInput)
+        setDeliverables([...deliverables, addDeliverableInput])  
+        setAddDeliverableInput("")   
+    }
+
+    console.log(deliverables)
+
+    const handleChangeAddDeliverable = () => {
         
+    }
+
+    // Function to clear deliverable input
+    const handleClearDeliverableInput = (e) => {
+        e.preventDefault()
+        setAddDeliverableInput("")
     }
 
  
 
+    // Function to submit all form enteries
     const handleSubmit = (e) => {
-        console.log(service.location)
         e.preventDefault()
         const formData = new FormData()
-
         formData.append('title', service.title)
         formData.append('description', service.description)
         formData.append('location', service.location)
@@ -107,15 +170,10 @@ const ServiceForm = () =>{
         formData.append('estimated_duration', service.estimation_duration)
         formData.append('price', price)
         formData.append('usageType', service.usageType)
-        formData.append('deliverables', service.deliverables)
+        formData.append('deliverables', getDeliverableString())
         formData.append('file', imageFiles)
         console.log(formData)
         dispatch(addService(formData))
-        // if(service.title && service.description && service.location && service.credibility && service.usageType && service.price && service.deliverables && imageFiles !== 0 ){
-           
-        // }else{
-        //     console.log("Fill all required input")
-        // }
     }
 
     return (
@@ -207,28 +265,52 @@ const ServiceForm = () =>{
                                     </div>
                                    
                                     {
-                                        (service.price && service.price < 10) && <ErrorMessage message="Price must be greater than $10" />
+                                        (service?.price && service?.price < 10) && <ErrorMessage message="Price must be greater than $10" />
                                     }
                                 </div>
 
                             </div>
                             <div className={styles.deliverables}>
                                 <p>Deliverables</p>
-                                <div className={styles.deliverable_list}>
-                                    {
-                                        deliverables.length !== 0 && deliverables.map((elem, i) => (
-                                            <DeliverablesComponent
-                                                key={i}
-                                                elem={elem}
-                                                index={i}
-                                                handleChangeInput = {handleChangeInput}
-                                                handleChangeDeliverable = {handleChangeDeliverable}
+                                <div className={styles.deliverable_list_container}>
+                                    <div className={styles.deliverable_list}>
+                                        {
+                                            deliverables?.length !== 0 && deliverables.map((elem, i) => (
+                                                <DeliverablesComponent
+                                                    key={i}
+                                                    elem={elem}
+                                                    index={i}
+                                                    handleChangeInput = {handleChangeInput}
+                                                    handleRemoveDeliverable = {handleRemoveDeliverable}
+                                                />
+                                            ))
+                                        }
+                                        
+                                    </div>
+                                    <div className={styles.add_clear_deliverable}>
+                                        <div className={styles.add_clear_form_input}>
+                                            <p>{deliverables?.length + 1}.</p>
+                                            <FormInput 
+                                                 type="text" 
+                                                 value={addDeliverableInput}
+                                                 handleChange={(e) => setAddDeliverableInput(e.target.value)}
+                                                 placeholder="e.g Check for windows update" 
+                                                 className={styles.add_clear_input}
+                                                 compulsory
                                             />
-                                        ))
-                                    }
-                                    <Button
-                                        className={styles.add_btn}
-                                    ><HiOutlinePlus className={styles.add_icon}/></Button>
+                                        </div>
+                                        <div className={styles.add_clear_btn}>
+                                            <Button
+                                                className={styles.sub_btn}
+                                                handleClick={handleClearDeliverableInput}
+                                            ><FaMinus className={styles.sub_icon} /></Button>
+                                            <Button
+                                                className={styles.add_btn}
+                                                handleClick={handleAddDeliverable}
+                                                ><FaPlus className={styles.add_icon}/>
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.images_upload}>
@@ -237,7 +319,7 @@ const ServiceForm = () =>{
                                     onDrop={onDrop} 
                                     accept={"image/*"}
                                 />
-                                <ServiceImages images={images}/>
+                                <ServiceImages images={images} handleRemoveImage={handleRemoveImage}/>
                             </div>
                             <div className={styles.submit_btn}>
                                 <PrimaryButton
@@ -255,17 +337,16 @@ const ServiceForm = () =>{
     )
 }
 
-const DeliverablesComponent = ({elem, index, handleChangeInput, handleChangeDeliverable}) => {
-
+const DeliverablesComponent = ({elem, index, handleChangeInput, handleRemoveDeliverable}) => {
+    console.log(elem)
     return(
-
         <div className={styles.deliverable_item}>
             <div style={{display:"flex"}}>
             <p>{index + 1}.</p>
             <FormInput 
                 type="text" 
                 name="deliverables"
-                value={elem.value}
+                value={elem}
                 handleChange={val => handleChangeInput(val, index)}
                 placeholder="e.g Check for windows update" 
                 className={styles.deliverables_input}
@@ -278,9 +359,9 @@ const DeliverablesComponent = ({elem, index, handleChangeInput, handleChangeDeli
                     className={styles.sub_btn}
                     handleClick={(e) =>{
                         e.preventDefault() 
-                        handleChangeDeliverable(index)
+                        handleRemoveDeliverable(index)
                     }}
-                ><HiOutlineMinus className={styles.sub_icon} /></Button>
+                ><FaMinus className={styles.sub_icon} /></Button>
             </div>
         </div>
     )
