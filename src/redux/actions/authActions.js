@@ -32,7 +32,6 @@ export const login = (email, password) => (dispatch) => {
                 payload:res.data.data
             })
             dispatch(returnSuccess(res.data.message))
-            // dispatch(loadUser())
         })
         .catch((err) => {
             console.log(err.response)
