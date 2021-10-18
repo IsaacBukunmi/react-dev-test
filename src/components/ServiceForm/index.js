@@ -21,9 +21,6 @@ const ServiceForm = () =>{
     const {isLoading} = useSelector(state => state.service)
     const dispatch = useDispatch()
 
-    const {token} = useSelector(state => state.auth)
-    console.log(token)
-
     // Initializing service form input
     const [service, setService] = useState({ title: "", description: "", location: "", credibility: "", estimation_duration:"0", usageType: "", price: "", deliverables: ""})
 
