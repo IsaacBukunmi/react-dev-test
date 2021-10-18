@@ -5,7 +5,6 @@ import Button, { PrimaryButton } from '../../elements/CustomButton';
 import { FormInput, FormSelectInput, FormTextArea, Picker } from '../../elements/FormInput';
 import { location, usageTypes } from '../../utils/select-options';
 import styles from './index.module.scss';
-import {HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import {BiDollar} from 'react-icons/bi'
 import DropzoneInput from '../../elements/DropzoneInput';
@@ -13,6 +12,7 @@ import ServiceImages from '../ServiceImages';
 import { useDispatch } from 'react-redux';
 import { addService } from '../../redux/actions/serviceActions';
 import ErrorMessage from '../ErrorMessage';
+import toast from 'react-hot-toast';
 
 
 
@@ -20,7 +20,6 @@ const ServiceForm = () =>{
 
     const {isLoading} = useSelector(state => state.service)
     const dispatch = useDispatch()
-
 
     // Initializing service form input
     const [service, setService] = useState({ title: "", description: "", location: "", credibility: "", estimation_duration:"0", usageType: "", price: "", deliverables: ""})
@@ -65,9 +64,8 @@ const ServiceForm = () =>{
 
 
     const handleRemoveImage = (id) => {
-    let newImages = images.filter((image) => image.id !== id)
-    setImages(newImages)
-        
+        let newImages = images.filter((image) => image.id !== id)
+        setImages(newImages)   
     }
 
    
@@ -89,33 +87,21 @@ const ServiceForm = () =>{
 
     // Function to handle deliverables input
     const handleChangeInput = (val, index) => {
-        console.log(val.target.value)
+    
         const newDeliverables = deliverables.reduce((arr, elem, i) => {
+            console.log(elem)
             if(i === index){
-                arr.push({ value: val });
+                arr.push(val.target.value);
                 return arr
             }
+            console.log(elem)
             arr.push(elem);
             return arr;
         }, [])
 
-        console.log(newDeliverables)
-
-        const newDeliverableValArr = newDeliverables.map((newDeliverableVal) => {
-            return newDeliverableVal?.value?.target?.value
-        })
-
-        setDeliverables(newDeliverableValArr)
+        setDeliverables(newDeliverables)
     }
 
-    console.log(deliverables)
-
-    // Get input value and put it in an array
-    // const deliverableValArray = deliverables.map((deliverableVal) => {
-    //     return deliverableVal?.value?.target?.value
-    // })
-
-    // console.log(deliverableValArray)
 
     // Function to get concatenated deliverable input values
     const getDeliverableString = () => {
@@ -126,9 +112,6 @@ const ServiceForm = () =>{
         console.log(deliverable.slice(0, -2))
         return deliverable.slice(0, -2)
     }
-    
-    getDeliverableString()
-
 
     //Function to remove deliverables
     const handleRemoveDeliverable = (index) => {
@@ -140,16 +123,15 @@ const ServiceForm = () =>{
     // Function to add deliverables
     const handleAddDeliverable = (e) => {
         e.preventDefault()
-        console.log(addDeliverableInput)
-        setDeliverables([...deliverables, addDeliverableInput])  
-        setAddDeliverableInput("")   
+        if(addDeliverableInput){
+            console.log(addDeliverableInput)
+            setDeliverables([...deliverables, addDeliverableInput])  
+            setAddDeliverableInput("")  
+        } else{
+            toast.error("Input a deliverable and add")
+        }
     }
 
-    console.log(deliverables)
-
-    const handleChangeAddDeliverable = () => {
-        
-    }
 
     // Function to clear deliverable input
     const handleClearDeliverableInput = (e) => {
@@ -337,6 +319,7 @@ const ServiceForm = () =>{
     )
 }
 
+// Deliverable Form Input Component
 const DeliverablesComponent = ({elem, index, handleChangeInput, handleRemoveDeliverable}) => {
     console.log(elem)
     return(
@@ -345,7 +328,6 @@ const DeliverablesComponent = ({elem, index, handleChangeInput, handleRemoveDeli
             <p>{index + 1}.</p>
             <FormInput 
                 type="text" 
-                name="deliverables"
                 value={elem}
                 handleChange={val => handleChangeInput(val, index)}
                 placeholder="e.g Check for windows update" 
