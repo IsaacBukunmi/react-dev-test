@@ -8,11 +8,14 @@
     height: 100vh;
     .container{
         @extend %container;
+        @media screen and (max-width:$break-point-md) {
+            width: 80%;
+         }
         .content{
             width:550px;
-            // @media screen and (max-width:$break-point-md) {
-            //    width: 100%;
-            // }
+            @media screen and (max-width:$break-point-md) {
+               width: 100%;
+            }
             .logo{
                 img{
                     width: 160px;
