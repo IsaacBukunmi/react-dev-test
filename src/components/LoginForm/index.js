@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -34,11 +35,12 @@ const LoginForm = () => {
     }
 
     const handleSubmit = (e) => {
+        console.log(user.password)
         e.preventDefault()
         if(user.email && user.password ){
             dispatch(login(user.email, user.password))
         }else{
-            console.log("Form is empty")
+           toast.error("Input both your email and password")
         }
     }
     
